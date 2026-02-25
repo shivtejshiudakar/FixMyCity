@@ -327,40 +327,6 @@ def status():
 
     return render_template('status.html', reports=reports)
 
-@app.route("/initdb")
-def init_db():
-
-    conn = get_db()
-    cursor = conn.cursor()
-
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS users (
-        user_id SERIAL PRIMARY KEY,
-        name VARCHAR(100),
-        email VARCHAR(100) UNIQUE,
-        password VARCHAR(100)
-    );
-    """)
-
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS civic_reports (
-        report_id SERIAL PRIMARY KEY,
-        user_id INT,
-        user_name VARCHAR(100),
-        issue_type VARCHAR(100),
-        description TEXT,
-        location VARCHAR(200),
-        status VARCHAR(50),
-        report_date DATE,
-        image_path VARCHAR(255)
-    );
-    """)
-
-    conn.commit()
-    conn.close()
-
-    return "Tables created successfully!"
-
 
 if __name__ == "__main__":
     app.run(debug=True)
