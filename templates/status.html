@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="mb-4 text-white">Submitted Issues</h2>
+
+<table class="table table-bordered table-striped table-hover shadow-sm">
+<thead class="table-dark">
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Issue</th>
+    <th>Location</th>
+    <th>Status</th>
+    <th>Image</th>
+</tr>
+</thead>
+
+<tbody>
+{% for r in reports %}
+<tr>
+    <td>{{ r.report_id }}</td>
+    <td>{{ r.user_name }}</td>
+    <td>{{ r.issue_type }}</td>
+    <td>{{ r.location }}</td>
+    <td>
+    {% if r.status == "Reported" %}
+    <span class="badge bg-warning text-dark">Reported</span>
+    {% elif r.status == "In Progress" %}
+    <span class="badge bg-primary">In Progress</span>
+    {% elif r.status == "Resolved" %}
+    <span class="badge bg-success">Resolved</span>
+    {% endif %}
+    </td>
+
+    <td>
+        {% if r.image_path %}
+            <img src="/uploads/{{ r.image_path }}" width="100" class="rounded">
+        {% else %}
+            No Image
+        {% endif %}
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+
+{% endblock %}

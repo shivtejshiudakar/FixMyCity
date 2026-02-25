@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="login-bg">
+
+    <div class="glass-card" style="width:600px; max-width:95%;">
+
+        <div class="text-center mb-4">
+            <i class="bi bi-exclamation-circle fs-1 text-info"></i>
+            <h2 class="mt-2">Report an Issue</h2>
+            <p>Help improve your city by reporting civic problems</p>
+        </div>
+
+        <form method="POST"
+              action="/submit"
+              enctype="multipart/form-data">
+
+            <!-- Issue Type -->
+            <div class="mb-3">
+                <label class="form-label">Issue Type</label>
+                <select name="issue_type" class="form-select" required>
+                    <option value="">Select Issue Type</option>
+                    <option>Garbage</option>
+                    <option>Footpath</option>
+                    <option>Road Damage</option>
+                    <option>Drainage</option>
+                    <option>Water Leak</option>
+                    <option>Pothole</option>
+                    <option>Streetlight</option>
+                    <option>Sanitation</option>
+                    <option>Traffic</option>
+                    <option>Infrastructure</option>
+                    <option>Water Supply</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea name="description"
+                          class="form-control"
+                          rows="3"
+                          placeholder="Describe the issue..."></textarea>
+            </div>
+
+            <!-- Location -->
+            <div class="mb-3">
+                <label class="form-label">Location</label>
+                <input type="text"
+                       name="location"
+                       class="form-control"
+                       placeholder="Enter location">
+            </div>
+
+            <!-- Upload -->
+            <div class="mb-3">
+                <label class="form-label">Upload Image</label>
+                <input type="file"
+                       name="image"
+                       class="form-control"
+                       required>
+            </div>
+
+            <button type="submit" class="btn gradient-btn w-100">
+                Submit Issue
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

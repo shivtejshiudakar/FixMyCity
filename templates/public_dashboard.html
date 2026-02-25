@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+/* Dashboard Styling */
+.dashboard-title {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.dashboard-card {
+    border-radius: 12px;
+    transition: all 0.2s ease-in-out;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+}
+
+.progress {
+    height: 10px;
+    border-radius: 10px;
+}
+
+.section-title {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.recent-item:hover {
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.quick-btn {
+    min-width: 140px;
+}
+
+.sidebar-title {
+    font-weight: 600;
+}
+</style>
+
+<div class="container-fluid mt-4">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div class="col-md-2 mb-4">
+            <div class="card shadow-sm dashboard-card">
+                <div class="card-body p-2">
+                    <div class="list-group list-group-flush">
+                        <a href="/" class="list-group-item list-group-item-primary sidebar-title">
+                            📊 Dashboard
+                        </a>
+                        <a href="/status" class="list-group-item">
+                            📝 Issues
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-10">
+
+            <h2 class="dashboard-title mb-4 text-white">
+                🏙 Public Analytics Dashboard
+            </h2>
+
+            <!-- Summary Cards -->
+            <div class="row mb-4 g-3">
+
+                <div class="col-md-3">
+                    <div class="card shadow-sm dashboard-card p-3 text-center">
+                        <h6 class="text-muted">Total Issues</h6>
+                        <h2>{{ total }}</h2>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card shadow-sm dashboard-card p-3 text-center">
+                        <h6 class="text-muted">Reported</h6>
+                        <h2 class="text-warning">{{ open_count }}</h2>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card shadow-sm dashboard-card p-3 text-center">
+                        <h6 class="text-muted">In Progress</h6>
+                        <h2 class="text-primary">{{ progress }}</h2>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card shadow-sm dashboard-card p-3 text-center">
+                        <h6 class="text-muted">Resolved</h6>
+                        <h2 class="text-success">{{ resolved }}</h2>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Issues by Category -->
+            <div class="card shadow-sm dashboard-card p-4 mb-4">
+                <h5 class="section-title mb-4">📂 Issues by Category</h5>
+
+                {% for c in categories %}
+                    {% if total > 0 %}
+                        {% set percent = (c.count / total * 100) %}
+                    {% else %}
+                        {% set percent = 0 %}
+                    {% endif %}
+
+                    <div class="mb-4">
+
+                        <div class="d-flex justify-content-between mb-1">
+                            <strong>{{ c.issue_type }}</strong>
+                            <span class="text-muted">
+                                {{ percent|round(0) }}%
+                            </span>
+                        </div>
+
+                        <div class="progress mb-1">
+                            <div class="progress-bar bg-info"
+                                 role="progressbar"
+                                 style="width: {{ percent|round(0) }}%;">
+                            </div>
+                        </div>
+
+                        <small class="text-muted">
+                            {{ c.count }} issues
+                        </small>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Recent Reports -->
+            <div class="card shadow-sm dashboard-card p-4 mb-4">
+                <h5 class="section-title mb-3">🕒 Recent Reports</h5>
+
+                {% for r in recent %}
+                    <div class="recent-item border-bottom pb-3 mb-3">
+
+                        <!-- Title + Status -->
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+
+                            <strong>{{ r.issue_type }}</strong>
+
+                            {% if r.status == "Reported" %}
+                                <span class="badge bg-warning text-dark">
+                                    REPORTED
+                                </span>
+                            {% elif r.status == "In Progress" %}
+                                <span class="badge bg-primary">
+                                    IN PROGRESS
+                                </span>
+                            {% else %}
+                                <span class="badge bg-success">
+                                    RESOLVED
+                                </span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Description -->
+                        <small class="text-muted d-block mb-2">
+                            {{ r.description[:100] }}...
+                        </small>
+
+                        <!-- Location + Date -->
+                        <div class="d-flex justify-content-between text-muted small">
+                            <span>
+                                📍 {{ r.location }}
+                            </span>
+
+                            <span>
+                                🗓 {{ r.report_date.strftime('%d %b %Y') if r.report_date }}
+                            </span>
+                        </div>
+
+                    </div>
+                {% else %}
+                    <p class="text-muted">No recent reports available.</p>
+                {% endfor %}
+            </div>
+
+
+            <!-- About Section -->
+                <div id="about" class="card shadow-sm dashboard-card p-4 mb-4">
+                <h5 class="section-title mb-3">ℹ About FixMyCity</h5>
+
+                <p class="text-muted mb-3">
+                    FixMyCity is a smart civic engagement platform that enables
+                    citizens to report infrastructure issues like road damage,
+                    water supply problems, streetlight failures, and drainage issues.
+                </p>
+
+                <p class="text-muted">
+                    The system tracks issues from
+                    <strong>Reported</strong> to
+                    <strong>In Progress</strong> to
+                    <strong>Resolved</strong>,
+                    ensuring transparency and accountability.
+                </p>
+            </div>
+
+
+                        <!-- Quick Action Section -->
+            <div class="card shadow-sm p-4 mt-5 mb-4">
+
+                <h5 class="mb-4 fw-bold">⚡ Quick Access</h5>
+
+                <div class="d-flex flex-wrap gap-3">
+
+                    <a href="/" class="btn btn-primary px-4">
+                        🏠 Home
+                    </a>
+
+                    <a href="/status" class="btn btn-success px-4">
+                        📋 View Issues
+                    </a>
+
+                    <a href="/#about" class="btn btn-outline-secondary px-4">
+                        ℹ About
+                    </a>
+
+                    <a href="/login" class="btn btn-info text-white px-4">
+                        👤 Citizen Login
+                    </a>
+
+                    <a href="/admin" class="btn btn-warning px-4">
+                        🔐 Admin Login
+                    </a>
+
+                </div>
+            </div>
+
+            
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="text-center">
+    <h1 class="fw-bold">Welcome to FixMyCity</h1>
+    <p class="lead">Report and track civic infrastructure issues easily.</p>
+
+    <div class="mt-4">
+
+        {% if session.get('user_id') %}
+            <a href="/dashboard" class="btn btn-success btn-lg">
+                Go to Citizen Dashboard
+            </a>
+
+        {% elif session.get('admin') %}
+            <a href="/admin/dashboard" class="btn btn-dark btn-lg">
+                Go to Admin Dashboard
+            </a>
+
+        {% else %}
+            <a href="/login" class="btn btn-success btn-lg me-3">
+                Citizen Login
+            </a>
+
+            <a href="/admin" class="btn btn-dark btn-lg">
+                Admin Login
+            </a>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

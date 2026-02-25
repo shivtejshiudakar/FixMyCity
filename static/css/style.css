@@ -1,0 +1,195 @@
+/* ======================
+   GLOBAL
+====================== */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #ffffff;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ======================
+   NAVBAR
+====================== */
+nav {
+    background: #2c3e50;
+    color: white;
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #00c853;
+}
+
+/* ======================
+   CONTAINER
+====================== */
+.container {
+    padding: 20px;
+}
+
+/* ======================
+   BUTTONS
+====================== */
+.btn {
+    display: inline-block;
+    padding: 10px 18px;
+    background: #27ae60;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #219150;
+    transform: translateY(-2px);
+}
+
+/* Gradient Button */
+.gradient-btn {
+    background: linear-gradient(45deg, #00c853, #2e7d32);
+    border: none;
+    color: white;
+    transition: 0.3s;
+}
+
+.gradient-btn:hover {
+    background: linear-gradient(45deg, #2e7d32, #00c853);
+    transform: scale(1.03);
+}
+
+/* ======================
+   FORMS
+====================== */
+form input,
+form select,
+form textarea {
+    display: block;
+    margin-bottom: 12px;
+    padding: 10px;
+    width: 100%;
+    max-width: 320px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+/* Input focus animation */
+form input:focus,
+form select:focus,
+form textarea:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(39,174,96,0.4);
+    border-color: #27ae60;
+}
+
+/* ======================
+   LOGIN BACKGROUND
+====================== */
+.login-bg {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ======================
+   GLASS LOGIN CARD
+====================== */
+.glass-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    padding: 40px;
+    width: 420px;
+    max-width: 90%;
+    color: white;
+    transition: 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Glass inputs */
+.glass-card input,
+.glass-card select,
+.glass-card textarea {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.glass-card input::placeholder {
+    color: #ddd;
+}
+
+/* Floating labels */
+.form-floating > label {
+    color: #ddd;
+}
+
+/* ======================
+   PASSWORD ICON
+====================== */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 45px; /* space for eye icon */
+}
+
+.password-wrapper i {
+    position: absolute;
+    top: 50%;
+    right: 15px;   /* keeps icon inside box */
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #999;
+    font-size: 18px;
+}
+
+/* ======================
+   RESPONSIVE
+====================== */
+@media (max-width: 768px) {
+    nav {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .glass-card {
+        padding: 25px;
+    }
+}
+
+/* Select box inside glass card */
+.glass-card select {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* Dropdown options (THE LIST) */
+.glass-card select option {
+    background: #2c3e50;   /* dark list background */
+    color: #fff;           /* text color */
+}

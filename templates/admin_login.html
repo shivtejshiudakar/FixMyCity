@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="login-bg">
+
+    <div class="glass-card text-center">
+
+        <div class="mb-4">
+            <i class="bi bi-shield-lock-fill fs-1 text-success"></i>
+            <h3 class="fw-bold mt-3">Administrator Portal</h3>
+            <small>Secure access to civic management system</small>
+        </div>
+
+        <form method="POST">
+
+            <!-- Floating Email -->
+            <div class="form-floating mb-3">
+                <input type="text"
+                       class="form-control bg-transparent text-white"
+                       name="username"
+                       placeholder="Email"
+                       required>
+                <label>Username</label>
+            </div>
+
+            <!-- Floating Password -->
+            <div class="form-floating mb-4 password-wrapper">
+                <input type="password"
+                       class="form-control bg-transparent text-white"
+                       name="password"
+                       id="adminPassword"
+                       placeholder="Password"
+                       required>
+                <label>Password</label>
+                <i class="bi bi-eye-slash" onclick="togglePassword('adminPassword', this)"></i>
+            </div>
+
+            <button type="submit"
+                    class="btn gradient-btn w-100 text-white py-2">
+                Sign In
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+function togglePassword(id, icon) {
+    const input = document.getElementById(id);
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("bi-eye-slash");
+        icon.classList.add("bi-eye");
+    } else {
+        input.type = "password";
+        icon.classList.remove("bi-eye");
+        icon.classList.add("bi-eye-slash");
+    }
+}
+</script>
+
+{% endblock %}

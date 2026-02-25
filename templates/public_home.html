@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-fluid p-0">
+
+    <div class="row g-0">
+
+        <!-- Sidebar -->
+        <div class="col-md-2 sidebar-premium">
+
+            <div class="sidebar-content">
+                <a href="/" class="sidebar-link active">Dashboard</a>
+                <a href="/status" class="sidebar-link">Issues</a>
+            </div>
+
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-10 main-content p-4">
+
+            <h2 class="mb-4 fw-bold">Public Analytics Dashboard</h2>
+
+            <!-- Summary Cards -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card-premium">
+                        <h6>Total Issues</h6>
+                        <h2>{{ total }}</h2>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card-premium">
+                        <h6>Open</h6>
+                        <h2 class="text-warning">{{ open_count }}</h2>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card-premium">
+                        <h6>In Progress</h6>
+                        <h2 class="text-primary">{{ progress }}</h2>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card-premium">
+                        <h6>Resolved</h6>
+                        <h2 class="text-success">{{ resolved }}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Issues by Category -->
+            <div class="card-premium mb-4 p-4">
+                <h5>Issues by Category</h5>
+
+                {% for c in categories %}
+                <div class="mb-3">
+                    <strong>{{ c.issue_type }} ({{ c.percent }}%)</strong>
+
+                    <div class="progress">
+                        <div class="progress-bar bg-info"
+                             style="width: {{ c.percent }}%">
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Recent Reports -->
+            <div class="card-premium mb-4 p-4">
+                <h5>Recent Reports</h5>
+
+                {% for r in recent %}
+                    <div class="border-bottom py-2">
+                        <strong>{{ r.issue_type }}</strong><br>
+                        <small>{{ r.description }}</small>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Quick Access -->
+            <div class="card-premium p-4">
+                <h5>Quick Access</h5>
+                <div class="d-flex gap-3 mt-3">
+                    <a href="/" class="btn btn-primary">Home</a>
+                    <a href="/status" class="btn btn-success">Issues</a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
