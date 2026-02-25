@@ -34,51 +34,9 @@ def allowed_file(filename):
 # =========================
 # PUBLIC DASHBOARD (HOME)
 # =========================
-@app.route('/')
+@app.route("/")
 def public_dashboard():
-
-    conn = get_db()
-    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-
-    cursor.execute("SELECT COUNT(*) as total FROM civic_reports")
-    total = cursor.fetchone()['total']
-
-    cursor.execute("SELECT COUNT(*) as count FROM civic_reports WHERE status='Reported'")
-    open_count = cursor.fetchone()['count']
-
-    cursor.execute("SELECT COUNT(*) as count FROM civic_reports WHERE status='In Progress'")
-    progress = cursor.fetchone()['count']
-
-    cursor.execute("SELECT COUNT(*) as count FROM civic_reports WHERE status='Resolved'")
-    resolved = cursor.fetchone()['count']
-
-    cursor.execute("""
-        SELECT issue_type, COUNT(*) as count
-        FROM civic_reports
-        GROUP BY issue_type
-        ORDER BY count DESC
-    """)
-    categories = cursor.fetchall()
-
-    cursor.execute("""
-        SELECT issue_type, description, status, report_date, location
-        FROM civic_reports
-        ORDER BY report_id DESC
-        LIMIT 5
-    """)
-    recent = cursor.fetchall()
-
-    conn.close()
-
-    return render_template(
-        "public_dashboard.html",
-        total=total,
-        open_count=open_count,
-        progress=progress,
-        resolved=resolved,
-        categories=categories,
-        recent=recent
-    )
+    return "FixMyCity running"
 
 
 # =========================
