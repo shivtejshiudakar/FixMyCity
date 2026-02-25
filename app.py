@@ -309,6 +309,24 @@ def admin_logout():
 def test():
     return "Test Working"
 
+# =========================
+@app.route('/status')
+def status():
+
+    conn = get_db()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+    cursor.execute("""
+        SELECT *
+        FROM civic_reports
+        ORDER BY report_id DESC
+    """)
+
+    reports = cursor.fetchall()
+    conn.close()
+
+    return render_template('status.html', reports=reports)
+
 @app.route("/initdb")
 def init_db():
 
