@@ -1,2 +1,1 @@
-git config --global user.name "shivtejshiudakar"
-git config --global user.email "shivtejshiudakar@gmail.com"
+postgresql://fixmycity_user:99F5qKTAHUO4ha1YSrj9U9EceJec9yJ8@dpg-d6fc63hr0fns73f80hu0-a/fixmycity_05oq
