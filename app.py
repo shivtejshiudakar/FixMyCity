@@ -8,10 +8,12 @@ import psycopg2.extras
 # APP CONFIG
 # =========================
 app = Flask(__name__)
-app.secret_key = "fixmycity_secret_key"
+app.secret_key = os.environ.get("SECRET_KEY", "default_secret")
 
 UPLOAD_FOLDER = "static/uploads"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
+
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -19,10 +21,16 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 # =========================
 # DATABASE CONNECTION
 # =========================
-DATABASE_URL = os.environ.get("DATABASE_URL")
-
 def get_db():
-    return psycopg2.connect(DATABASE_URL)
+    DATABASE_URL = os.environ.get("DATABASE_URL")
+
+    if not DATABASE_URL:
+        raise Exception("DATABASE_URL missing!")
+
+    return psycopg2.connect(
+        DATABASE_URL,
+        sslmode="require"
+    )
 
 # =========================
 # HELPERS
@@ -364,5 +372,5 @@ def status():
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
