@@ -35,6 +35,10 @@ nav a:hover {
     color: #00c853;
 }
 
+.navbar {
+    width: 100%;
+}
+
 /* ======================
    CONTAINER
 ====================== */
@@ -218,5 +222,28 @@ form textarea:focus {
 
     .container {
         padding: 10px;
+    }
+}
+
+/* ======================
+   MOBILE TABLE FIX
+====================== */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    min-width: 900px;
+}
+
+@media (max-width: 768px) {
+
+    .container {
+        padding: 10px !important;
+    }
+
+    h2, h3 {
+        font-size: 24px;
     }
 }
