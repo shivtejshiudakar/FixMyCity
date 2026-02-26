@@ -19,6 +19,7 @@ nav {
     color: white;
     padding: 15px 25px;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 20px;
 }
@@ -82,7 +83,7 @@ form textarea {
     margin-bottom: 12px;
     padding: 10px;
     width: 100%;
-    max-width: 320px;
+    max-width: 100%;
     border: 1px solid #ccc;
     border-radius: 6px;
 }
@@ -116,8 +117,8 @@ form textarea:focus {
     border-radius: 20px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.3);
     padding: 40px;
-    width: 420px;
-    max-width: 90%;
+    width: 100%;
+    max-width: 420px;
     color: white;
     transition: 0.3s ease;
 }
@@ -192,4 +193,30 @@ form textarea:focus {
 .glass-card select option {
     background: #2c3e50;   /* dark list background */
     color: #fff;           /* text color */
+}
+
+
+/* ======================
+   MOBILE FIX
+====================== */
+@media (max-width: 768px) {
+
+    .glass-card {
+        width: 95%;
+        padding: 20px;
+    }
+
+    nav {
+        flex-wrap: wrap;
+    }
+
+    form input,
+    form select,
+    form textarea {
+        width: 100%;
+    }
+
+    .container {
+        padding: 10px;
+    }
 }
