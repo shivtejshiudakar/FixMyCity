@@ -88,6 +88,18 @@ def public_dashboard():
         recent=recent
     )
 
+
+@app.route('/mission')
+def mission():
+    return render_template('mission.html')
+
+@app.route('/features')
+def features():
+    return render_template('features.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 # =========================
 
 @app.route("/initdb")
