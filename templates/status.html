@@ -47,38 +47,6 @@
 </tr>
 {% endfor %}
 
-{% for r in reports %}
-<div class="card mb-3 p-3 shadow-sm">
-
-  <h5>{{ r.issue_type }}</h5>
-  <p>{{ r.location }}</p>
-
-  {% if r.status == "Reported" %}
-      <span class="badge bg-danger">Reported</span>
-
-  {% elif r.status == "In Progress" %}
-      <span class="badge bg-warning text-dark">In Progress</span>
-
-  {% elif r.status == "Resolved" %}
-      <span class="badge bg-success">Resolved</span>
-  {% endif %}
-
-</div>
-{% endfor %}
-
-<div class="progress mt-2">
-  {% if r.status == "Reported" %}
-      <div class="progress-bar bg-danger" style="width:33%">Reported</div>
-
-  {% elif r.status == "In Progress" %}
-      <div class="progress-bar bg-warning" style="width:66%">In Progress</div>
-
-  {% elif r.status == "Resolved" %}
-      <div class="progress-bar bg-success" style="width:100%">Resolved</div>
-  {% endif %}
-</div>
-
-
 </tbody>
 
 </table>
