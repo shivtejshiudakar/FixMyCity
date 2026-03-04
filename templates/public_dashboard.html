@@ -2,274 +2,383 @@
 {% block content %}
 
 <style>
-.dashboard-card {
-    border-radius: 12px;
-    transition: 0.2s ease-in-out;
+
+.hero-section{
+background:linear-gradient(135deg,#0d6efd,#6610f2);
+color:white;
+padding:100px 0;
 }
-.dashboard-card:hover {
-    transform: translateY(-3px);
+
+.dashboard-card{
+border-radius:12px;
+transition:0.2s;
 }
-.progress {
-    height: 10px;
-    border-radius: 10px;
+
+.dashboard-card:hover{
+transform:translateY(-4px);
 }
-.section-title {
-    font-weight: 600;
+
+.progress{
+height:10px;
+border-radius:10px;
 }
-.recent-item:hover {
-    background: #f8f9fa;
-    border-radius: 8px;
+
+.section-title{
+font-weight:600;
 }
-footer {
-    border-top: 1px solid #e2e2e2;
+
+.recent-item:hover{
+background:#f8f9fa;
+border-radius:8px;
 }
-footer a:hover {
-    color: #0d6efd !important;
+
+footer{
+border-top:1px solid #e2e2e2;
 }
-html {
-    scroll-behavior: smooth;
+
+footer a:hover{
+color:#0d6efd !important;
 }
+
+.counter{
+font-weight:bold;
+}
+
 </style>
 
 
 <div class="container-fluid px-5">
 
-    <!-- HERO SECTION -->
-    <section class="bg-dark text-white text-center py-5 mb-5 position-relative overflow-hidden">
 
-    <!-- Overlay for premium look -->
-    <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></div>
+<!-- HERO SECTION -->
 
-    <div class="container position-relative">
-        <h1 class="display-3 fw-bold mb-3">
-            FixMyCity
-        </h1>
+<section class="hero-section text-center mb-5">
 
-        <p class="lead fs-4 mb-3">
-            Smart Civic Issue Management System
-        </p>
+<h1 class="display-4 fw-bold mb-3">
+FixMyCity
+</h1>
 
-        <p class="text-light mx-auto mb-4" style="max-width: 750px;">
-            A modern platform that empowers citizens to report civic problems,
-            track resolution progress, and help authorities build cleaner,
-            safer, and smarter cities through digital transparency.
-        </p>
+<p class="lead mb-4">
+Report. Track. Improve Your City.
+</p>
 
-        <div class="d-flex justify-content-center gap-3 flex-wrap">
-            <a href="/register" class="btn btn-warning btn-lg px-4">
-                🚨 Report an Issue
-            </a>
+<p class="mx-auto mb-4" style="max-width:700px;">
+A smart civic issue management platform that enables citizens to report
+urban problems such as potholes, streetlight failures, garbage issues,
+and water leakage while allowing authorities to track and resolve them efficiently.
+</p>
 
-            <a href="#about" class="btn btn-outline-light btn-lg px-4">
-                Learn More
-            </a>
-        </div>
+<div class="d-flex justify-content-center gap-3 flex-wrap">
 
-        <!-- Mini professional highlight -->
-        <p class="mt-4 text-secondary small">
-            Mini Project • Smart Civic Infrastructure System
-        </p>
-    </div>
+<a href="/register" class="btn btn-light btn-lg px-4">
+Report an Issue
+</a>
+
+<a href="#about" class="btn btn-outline-light btn-lg px-4">
+Learn More
+</a>
+
+</div>
+
+<p class="mt-4 small opacity-75">
+Smart Civic Infrastructure • Mini Project
+</p>
 
 </section>
 
 
-    <!-- SUMMARY CARDS -->
-    <div class="row mb-5 g-4">
+<!-- SUMMARY STATS -->
 
-        <div class="col-md-3">
-            <div class="card shadow-sm dashboard-card p-4 text-center">
-                <h6 class="text-muted">Total Issues</h6>
-                <h2>{{ total }}</h2>
-            </div>
-        </div>
+<div class="row mb-5 g-4 text-center">
 
-        <div class="col-md-3">
-            <div class="card shadow-sm dashboard-card p-4 text-center">
-                <h6 class="text-muted">Reported</h6>
-                <h2 class="text-warning">{{ open_count }}</h2>
-            </div>
-        </div>
+<div class="col-md-3">
+<div class="card shadow-sm dashboard-card p-4">
+<h6 class="text-muted">Total Issues</h6>
+<h2 class="counter" data-target="{{ total }}">0</h2>
+</div>
+</div>
 
-        <div class="col-md-3">
-            <div class="card shadow-sm dashboard-card p-4 text-center">
-                <h6 class="text-muted">In Progress</h6>
-                <h2 class="text-primary">{{ progress }}</h2>
-            </div>
-        </div>
+<div class="col-md-3">
+<div class="card shadow-sm dashboard-card p-4">
+<h6 class="text-muted">Reported</h6>
+<h2 class="text-warning counter" data-target="{{ open_count }}">0</h2>
+</div>
+</div>
 
-        <div class="col-md-3">
-            <div class="card shadow-sm dashboard-card p-4 text-center">
-                <h6 class="text-muted">Resolved</h6>
-                <h2 class="text-success">{{ resolved }}</h2>
-            </div>
-        </div>
+<div class="col-md-3">
+<div class="card shadow-sm dashboard-card p-4">
+<h6 class="text-muted">In Progress</h6>
+<h2 class="text-primary counter" data-target="{{ progress }}">0</h2>
+</div>
+</div>
 
-    </div>
+<div class="col-md-3">
+<div class="card shadow-sm dashboard-card p-4">
+<h6 class="text-muted">Resolved</h6>
+<h2 class="text-success counter" data-target="{{ resolved }}">0</h2>
+</div>
+</div>
 
-
-    <!-- ISSUES BY CATEGORY -->
-    <div class="card shadow-sm dashboard-card p-4 mb-5">
-        <h5 class="section-title mb-4">📂 Issues by Category</h5>
-
-        {% for c in categories %}
-            {% if total > 0 %}
-                {% set percent = (c.count / total * 100) %}
-            {% else %}
-                {% set percent = 0 %}
-            {% endif %}
-
-            <div class="mb-4">
-                <div class="d-flex justify-content-between mb-1">
-                    <strong>{{ c.issue_type }}</strong>
-                    <span class="text-muted">
-                        {{ percent|round(0) }}%
-                    </span>
-                </div>
-
-                <div class="progress mb-1">
-                    <div class="progress-bar bg-info"
-                         style="width: {{ percent|round(0) }}%;">
-                    </div>
-                </div>
-
-                <small class="text-muted">
-                    {{ c.count }} issues
-                </small>
-            </div>
-        {% endfor %}
-    </div>
-
-
-    <!-- RECENT REPORTS -->
-    <div class="card shadow-sm dashboard-card p-4 mb-5">
-        <h5 class="section-title mb-3">🕒 Recent Reports</h5>
-
-        {% for r in recent %}
-            <div class="recent-item border-bottom pb-3 mb-3">
-
-                <div class="d-flex justify-content-between align-items-center mb-1">
-                    <strong>{{ r.issue_type }}</strong>
-
-                    {% if r.status == "Reported" %}
-                        <span class="badge bg-warning text-dark">
-                            REPORTED
-                        </span>
-                    {% elif r.status == "In Progress" %}
-                        <span class="badge bg-primary">
-                            IN PROGRESS
-                        </span>
-                    {% else %}
-                        <span class="badge bg-success">
-                            RESOLVED
-                        </span>
-                    {% endif %}
-                </div>
-
-                <small class="text-muted d-block mb-2">
-                    {{ r.description[:100] }}...
-                </small>
-
-                <div class="d-flex justify-content-between text-muted small">
-                    <span>📍 {{ r.location }}</span>
-                    <span>
-                        🗓 {{ r.report_date.strftime('%d %b %Y') if r.report_date }}
-                    </span>
-                </div>
-            </div>
-        {% else %}
-            <p class="text-muted">No recent reports available.</p>
-        {% endfor %}
-    </div>
-
-
-    <!-- ABOUT SECTION -->
-    <div id="about" class="card shadow-sm dashboard-card p-4 mb-5">
-    <h5 class="section-title mb-3">ℹ About FixMyCity</h5>
-
-    <p class="text-muted mb-3">
-        FixMyCity is a smart civic engagement platform designed to connect
-        citizens with local authorities for faster resolution of urban
-        infrastructure problems. The system allows users to digitally report
-        issues such as road damage, water supply problems, streetlight failures,
-        drainage blockages, and public cleanliness concerns.
-    </p>
-
-    <p class="text-muted mb-3">
-        The platform follows a transparent workflow where every complaint moves
-        through different stages:
-        <strong>Reported → In Progress → Resolved</strong>,
-        helping improve accountability and service efficiency.
-    </p>
-
-    <h6 class="fw-bold mt-3">✨ Key Features</h6>
-    <ul class="text-muted">
-        <li>Easy issue reporting with location and description</li>
-        <li>Real-time status tracking of complaints</li>
-        <li>Admin dashboard for monitoring and management</li>
-        <li>Data-driven civic analytics and statistics</li>
-        <li>Improved communication between citizens and authorities</li>
-    </ul>
-
-    <h6 class="fw-bold mt-3">🎯 Project Objective</h6>
-    <p class="text-muted mb-0">
-        The main goal of FixMyCity is to promote smart urban governance by
-        using technology to simplify complaint management, increase transparency,
-        and encourage active citizen participation in city development.
-    </p>
 </div>
 
 
-<!-- PROFESSIONAL FOOTER -->
-<footer class="pt-5 pb-4" style="background:#f4f6f3;">
 
-    <div class="container-fluid px-5">
+<!-- ISSUES BY CATEGORY -->
 
-        <div class="row">
+<div class="card shadow-sm dashboard-card p-4 mb-5">
 
-            <!-- About Column -->
-            <!-- About Column -->
-            <div class="col-md-4 mb-4">
-                <h5 class="fw-bold">Mini Project</h5>
-                <p class="text-muted">
-                    A smart civic management system designed to improve urban issue
-                    reporting, tracking, and resolution through digital technology.
-                </p>
-            </div>
+<h5 class="section-title mb-4">Issues by Category</h5>
 
-            <!-- Quick Links -->
-            <div class="col-md-4 mb-4">
-                <h5 class="fw-bold">Quick Links</h5>
-                <ul class="list-unstyled text-muted">
-                    <li><a href="/" class="text-decoration-none text-muted">Home</a></li>
-                    <li><a href="/status" class="text-decoration-none text-muted">Issues</a></li>
-                    <li><a href="/#about" class="text-decoration-none text-muted">About</a></li>
-                    <li><a href="/login" class="text-decoration-none text-muted">Citizen Login</a></li>
-                    <li><a href="/admin" class="text-decoration-none text-muted">Admin Login</a></li>
-                </ul>
-            </div>
+{% for c in categories %}
 
-            <!-- Contact -->
-            <div class="col-md-4 mb-4">
-                <h5 class="fw-bold">Contact</h5>
-                <p class="text-muted mb-1">📍 Maharashtra, India</p>
-                <p class="text-muted mb-1">📧 shivtejshiudakar@gmail.com</p>
-                <p class="text-muted">☎ +91 7218720560</p>
-            </div>
+{% if total > 0 %}
+{% set percent = (c.count / total * 100) %}
+{% else %}
+{% set percent = 0 %}
+{% endif %}
 
-        </div>
+<div class="mb-4">
 
-        <hr>
+<div class="d-flex justify-content-between mb-1">
+<strong>{{ c.issue_type }}</strong>
+<span class="text-muted">
+{{ percent|round(0) }}%
+</span>
+</div>
 
-        <div class="d-flex justify-content-between text-muted small">
-            <span>© 2026 Mini Project</span>
-            <span>
-                <a href="#" class="text-muted text-decoration-none">Contact</a>
-            </span>
-        </div>
+<div class="progress mb-1">
+<div class="progress-bar bg-info"
+style="width: {{ percent|round(0) }}%;">
+</div>
+</div>
 
-    </div>
+<small class="text-muted">
+{{ c.count }} issues
+</small>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+
+
+<!-- RECENT REPORTS -->
+
+<div class="card shadow-sm dashboard-card p-4 mb-5">
+
+<h5 class="section-title mb-3">Recent Reports</h5>
+
+{% for r in recent %}
+
+<div class="recent-item border-bottom pb-3 mb-3">
+
+<div class="d-flex justify-content-between align-items-center mb-1">
+
+<strong>{{ r.issue_type }}</strong>
+
+{% if r.status == "Reported" %}
+
+<span class="badge bg-warning text-dark">
+REPORTED
+</span>
+
+{% elif r.status == "In Progress" %}
+
+<span class="badge bg-primary">
+IN PROGRESS
+</span>
+
+{% else %}
+
+<span class="badge bg-success">
+RESOLVED
+</span>
+
+{% endif %}
+
+</div>
+
+<small class="text-muted d-block mb-2">
+{{ r.description[:100] }}...
+</small>
+
+<div class="d-flex justify-content-between text-muted small">
+
+<span>📍 {{ r.location }}</span>
+
+<span>
+🗓 {{ r.report_date.strftime('%d %b %Y') if r.report_date }}
+</span>
+
+</div>
+
+</div>
+
+{% else %}
+
+<p class="text-muted">No recent reports available.</p>
+
+{% endfor %}
+
+</div>
+
+
+
+<!-- ABOUT SECTION -->
+
+<div id="about" class="card shadow-sm dashboard-card p-4 mb-5">
+
+<h5 class="section-title mb-3">About FixMyCity</h5>
+
+<p class="text-muted">
+
+FixMyCity is a digital civic engagement platform that allows citizens
+to report infrastructure issues directly to municipal authorities.
+
+Users can submit complaints related to roads, drainage systems,
+garbage collection, streetlights, and public utilities.
+
+</p>
+
+<p class="text-muted">
+
+Each complaint follows a transparent workflow:
+
+<strong>Reported → In Progress → Resolved</strong>
+
+This ensures accountability and improves service efficiency.
+
+</p>
+
+<h6 class="fw-bold mt-3">Key Features</h6>
+
+<ul class="text-muted">
+
+<li>Easy online issue reporting</li>
+
+<li>Real-time complaint status tracking</li>
+
+<li>Admin dashboard for monitoring issues</li>
+
+<li>City analytics and statistics</li>
+
+<li>Improved citizen-government communication</li>
+
+</ul>
+
+</div>
+
+
+
+<!-- FOOTER -->
+
+<footer class="pt-5 pb-4 bg-light">
+
+<div class="container-fluid px-5">
+
+<div class="row">
+
+<div class="col-md-4 mb-4">
+
+<h5 class="fw-bold">FixMyCity</h5>
+
+<p class="text-muted">
+A smart civic issue management system designed to improve
+urban infrastructure reporting and resolution through technology.
+</p>
+
+</div>
+
+<div class="col-md-4 mb-4">
+
+<h5 class="fw-bold">Quick Links</h5>
+
+<ul class="list-unstyled text-muted">
+
+<li><a href="/" class="text-decoration-none text-muted">Home</a></li>
+
+<li><a href="/status" class="text-decoration-none text-muted">Track Issues</a></li>
+
+<li><a href="/login" class="text-decoration-none text-muted">Citizen Login</a></li>
+
+<li><a href="/admin" class="text-decoration-none text-muted">Admin Login</a></li>
+
+</ul>
+
+</div>
+
+<div class="col-md-4 mb-4">
+
+<h5 class="fw-bold">Contact</h5>
+
+<p class="text-muted mb-1">📍 Maharashtra, India</p>
+<p class="text-muted mb-1">📧 your@email.com</p>
+<p class="text-muted">☎ +91 XXXXX XXXXX</p>
+
+</div>
+
+</div>
+
+<hr>
+
+<div class="d-flex justify-content-between text-muted small">
+
+<span>© 2026 FixMyCity Mini Project</span>
+
+<span>Smart Civic Infrastructure System</span>
+
+</div>
+
+</div>
 
 </footer>
+
+
+</div>
+
+
+<!-- COUNTER SCRIPT -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+const counters = document.querySelectorAll('.counter');
+
+counters.forEach(counter => {
+
+const update = () => {
+
+const target = +counter.getAttribute('data-target');
+
+const count = +counter.innerText;
+
+const inc = target / 100;
+
+if(count < target){
+
+counter.innerText = Math.ceil(count + inc);
+
+setTimeout(update,20);
+
+}
+
+else{
+
+counter.innerText = target;
+
+}
+
+};
+
+update();
+
+});
+
+});
+
+</script>
 
 {% endblock %}
